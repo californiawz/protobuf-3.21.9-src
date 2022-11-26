@@ -89,6 +89,14 @@
 #define PROTOBUF_has_cpp_attribute_DEFINED_
 #endif
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4800)
+#pragma warning(disable:4701)
+#pragma warning(disable:4065)
+#pragma warning(disable:4506)
+#pragma warning(disable : 4661)
+#endif 
+
 // Portable fallback for Clang's __has_feature macro:
 // https://clang.llvm.org/docs/LanguageExtensions.html#has-feature-and-has-extension
 #ifndef __has_feature
@@ -448,17 +456,17 @@
 
 #if defined(PROTOBUF_USE_DLLS) && defined(_MSC_VER)
 # if defined(LIBPROTOBUF_EXPORTS)
-#  define PROTOBUF_EXPORT __declspec(dllexport)
+#  define PROTOBUF_EXPORT PROTOBUF_API
 #  define PROTOBUF_EXPORT_TEMPLATE_DECLARE
-#  define PROTOBUF_EXPORT_TEMPLATE_DEFINE __declspec(dllexport)
+#  define PROTOBUF_EXPORT_TEMPLATE_DEFINE PROTOBUF_API
 # else
-#  define PROTOBUF_EXPORT __declspec(dllimport)
+#  define PROTOBUF_EXPORT _DLLIMPORT
 #  define PROTOBUF_EXPORT_TEMPLATE_DECLARE
-#  define PROTOBUF_EXPORT_TEMPLATE_DEFINE __declspec(dllimport)
+#  define PROTOBUF_EXPORT_TEMPLATE_DEFINE PROTOBUF_API
 # endif  // defined(LIBPROTOBUF_EXPORTS)
 #elif defined(PROTOBUF_USE_DLLS) && defined(LIBPROTOBUF_EXPORTS)
-# define PROTOBUF_EXPORT __attribute__((visibility("default")))
-# define PROTOBUF_EXPORT_TEMPLATE_DECLARE __attribute__((visibility("default")))
+# define PROTOBUF_EXPORT PROTOBUF_API
+# define PROTOBUF_EXPORT_TEMPLATE_DECLARE PROTOBUF_API
 # define PROTOBUF_EXPORT_TEMPLATE_DEFINE
 #else
 # define PROTOBUF_EXPORT
@@ -472,12 +480,12 @@
 
 #if defined(PROTOBUF_USE_DLLS) && defined(_MSC_VER)
 # if defined(LIBPROTOC_EXPORTS)
-#  define PROTOC_EXPORT __declspec(dllexport)
+#  define PROTOC_EXPORT PROTOBUF_API
 # else
-#  define PROTOC_EXPORT __declspec(dllimport)
+#  define PROTOC_EXPORT PROTOBUF_API
 # endif  // defined(LIBPROTOC_EXPORTS)
 #elif defined(PROTOBUF_USE_DLLS) && defined(LIBPROTOC_EXPORTS)
-# define PROTOC_EXPORT __attribute__((visibility("default")))
+# define PROTOC_EXPORT PROTOBUF_API
 #else
 # define PROTOC_EXPORT
 #endif
